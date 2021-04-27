@@ -12,7 +12,7 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   List<Task> tasks = [
     Task(name: "Do Cv"),
-    Task(name: "Change jobs"),
+    Task(name: "Change jobs", isDone: true),
     Task(name: "Fuck the world"),
   ];
 
@@ -23,6 +23,12 @@ class _TasksScreenState extends State<TasksScreen> {
   void addTask(String taskName) {
     setState(() {
       tasks.add(Task(name: taskName));
+    });
+  }
+
+  void checkboxCallback(int index) {
+    setState(() {
+      tasks[index].toggleDone();
     });
   }
 
@@ -78,7 +84,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${tasks.where((element) => !element.isDone).length} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -97,6 +103,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       topRight: Radius.circular(20.0))),
               child: TasksList(
                 tasks: tasks,
+                checkboxCallback: checkboxCallback,
               ),
             ),
           )

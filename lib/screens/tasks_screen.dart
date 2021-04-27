@@ -20,9 +20,11 @@ class _TasksScreenState extends State<TasksScreen> {
     return Container();
   }
 
-  void addTask = ({String taskName}) {
-    tasks.add(Task(name: taskName));
-  };
+  void addTask(String taskName) {
+    setState(() {
+      tasks.add(Task(name: taskName));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,9 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(),
+                child: AddTaskScreen(
+                  addTask: addTask,
+                ),
               ),
             ),
           )

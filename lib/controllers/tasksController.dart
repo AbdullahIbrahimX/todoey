@@ -15,7 +15,7 @@ class TasksController extends ChangeNotifier {
   }
 
   UnmodifiableListView<Task> get tasks {
-    return List.unmodifiable(_tasks);
+    return UnmodifiableListView(_tasks);
   }
 
   void addTask(String taskName) {

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/controllers/tasksController.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  final Function addTask;
-
-  const AddTaskScreen({this.addTask});
+  // final Function addTask;
+  //
+  // const AddTaskScreen({this.addTask});
 
   void onSubmit(String taskName, BuildContext context) {
-    taskName != null ? addTask(taskName.trim()) : addTask('noName');
+    taskName != null
+        ? Provider.of<TasksController>(context, listen: false)
+            .addTask(taskName.trim())
+        : Provider.of<TasksController>(context, listen: false)
+            .addTask("noName");
     Navigator.pop(context);
   }
 

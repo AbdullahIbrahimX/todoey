@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/controllers/tasksController.dart';
 
 class TaskTile extends StatelessWidget {
   final bool isChecked;
   final String taskTitle;
-  final Function checkboxCallback;
+  final int index;
 
-  TaskTile({this.isChecked, this.taskTitle, this.checkboxCallback});
+  TaskTile({this.isChecked, this.taskTitle, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +21,11 @@ class TaskTile extends StatelessWidget {
       trailing: Checkbox(
         activeColor: Colors.lightBlueAccent,
         value: isChecked,
-        onChanged: checkboxCallback,
+        onChanged: (s) {
+          Provider.of<TasksController>(context, listen: false)
+              .toggleDone(index);
+        },
       ),
     );
   }
 }
-
-// (bool newValue) {
-// setState(() {
-// isChecked = newValue;
-// });

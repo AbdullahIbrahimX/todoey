@@ -1,21 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoey/Widgets/task_list.dart';
-import 'package:todoey/models/task.dart';
+import 'package:todoey/controllers/tasksController.dart';
 import 'package:todoey/screens/add_task_screen.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: "Do Cv"),
-    Task(name: "Change jobs"),
-    Task(name: "Fuck the world"),
-  ];
-
+class TasksScreen extends StatelessWidget {
   Widget buildBottomSheet(BuildContext context) {
     return Container();
   }
@@ -47,13 +37,7 @@ class _TasksScreenState extends State<TasksScreen> {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(
-                  addTask: (String taskName) {
-                    setState(() {
-                      tasks.add(Task(name: taskName));
-                    });
-                  },
-                ),
+                child: AddTaskScreen(),
               ),
             ),
           )
@@ -88,7 +72,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   ),
                 ),
                 Text(
-                  '${tasks.where((element) => !element.isDone).length} Tasks',
+                  '${Provider.of<TasksController>(context).getUndoneTasksCount()} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -105,14 +89,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0))),
-              child: TasksList(
-                tasks: tasks,
-                checkboxCallback: (int index) {
-                  setState(() {
-                    tasks[index].toggleDone();
-                  });
-                },
-              ),
+              child: TasksList(),
             ),
           )
         ],

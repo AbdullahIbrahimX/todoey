@@ -12,7 +12,7 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   List<Task> tasks = [
     Task(name: "Do Cv"),
-    Task(name: "Change jobs", isDone: true),
+    Task(name: "Change jobs"),
     Task(name: "Fuck the world"),
   ];
 
@@ -20,17 +20,17 @@ class _TasksScreenState extends State<TasksScreen> {
     return Container();
   }
 
-  void addTask(String taskName) {
-    setState(() {
-      tasks.add(Task(name: taskName));
-    });
-  }
-
-  void checkboxCallback(int index) {
-    setState(() {
-      tasks[index].toggleDone();
-    });
-  }
+  // void addTask(String taskName) {
+  //   setState(() {
+  //     tasks.add(Task(name: taskName));
+  //   });
+  // }
+  //
+  // void checkboxCallback(int index) {
+  //   setState(() {
+  //     tasks[index].toggleDone();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,11 @@ class _TasksScreenState extends State<TasksScreen> {
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
                 child: AddTaskScreen(
-                  addTask: addTask,
+                  addTask: (String taskName) {
+                    setState(() {
+                      tasks.add(Task(name: taskName));
+                    });
+                  },
                 ),
               ),
             ),
@@ -103,7 +107,11 @@ class _TasksScreenState extends State<TasksScreen> {
                       topRight: Radius.circular(20.0))),
               child: TasksList(
                 tasks: tasks,
-                checkboxCallback: checkboxCallback,
+                checkboxCallback: (int index) {
+                  setState(() {
+                    tasks[index].toggleDone();
+                  });
+                },
               ),
             ),
           )

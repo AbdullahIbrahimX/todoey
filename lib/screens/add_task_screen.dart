@@ -5,6 +5,11 @@ class AddTaskScreen extends StatelessWidget {
 
   const AddTaskScreen({this.addTask});
 
+  void onSubmit(String taskName, BuildContext context) {
+    taskName != null ? addTask(taskName.trim()) : addTask('noName');
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     String taskName;
@@ -37,12 +42,11 @@ class AddTaskScreen extends StatelessWidget {
               onChanged: (value) {
                 taskName = value;
               },
+              onSubmitted: (st) {
+                onSubmit(taskName, context);
+              },
             ),
             FlatButton(
-              onPressed: () {
-                addTask(taskName);
-                Navigator.pop(context);
-              },
               child: Text(
                 "Add",
                 style: TextStyle(
@@ -50,6 +54,9 @@ class AddTaskScreen extends StatelessWidget {
                 ),
               ),
               color: Colors.lightBlueAccent,
+              onPressed: () {
+                onSubmit(taskName, context);
+              },
             )
           ],
         ),
